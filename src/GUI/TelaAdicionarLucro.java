@@ -4,7 +4,8 @@
  */
 package GUI;
 
-import Classes.RelatorioFinanceiro;
+import javax.swing.JOptionPane;
+import DAO.FinanceiroDAO;
 
 /**
  *
@@ -19,12 +20,14 @@ public class TelaAdicionarLucro extends javax.swing.JFrame {
         initComponents();
     }
     
-     public TelaAdicionarLucro(RelatorioFinanceiro R) {
+     public TelaAdicionarLucro(FinanceiroDAO R) {
         initComponents();
         this.R = R;
+
     }
     
-    RelatorioFinanceiro R;
+
+    private FinanceiroDAO R;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -113,9 +116,14 @@ public class TelaAdicionarLucro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLucroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLucroActionPerformed
-        Double lucro = Double.parseDouble(txtLucro.getText());
-        
-        R.addLucro(lucro);
+           try {
+            Double lucro = Double.parseDouble(txtLucro.getText());
+            R.addLucro(lucro);
+            javax.swing.JOptionPane.showMessageDialog(this, "Lucro salvo com sucesso!");
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Valor inválido para lucro.");
+        }
+    
     }//GEN-LAST:event_btnLucroActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Classes;
 
 /**
@@ -17,6 +14,32 @@ public class Funcionario {
     private String confirmarSenha;
     private String telefone;
     private String cargo;
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
     
      public Funcionario(String nome, String CPF, String senha, String telefone, String cargo) {
   
@@ -45,6 +68,10 @@ public class Funcionario {
 
     public String getCPF() {
         return CPF;
+    }
+    
+    public boolean validarSenha(String tentativa) {
+        return senha.equals(tentativa);
     }
     
 }

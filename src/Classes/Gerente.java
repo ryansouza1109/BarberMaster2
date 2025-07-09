@@ -4,17 +4,16 @@
  */
 package Classes;
 
-/**
- *
- * @author ryanp
- */
+
+
+
 public class Gerente extends Funcionario {
     
-    private String cargo;
-    public Gerente(String nome, String CPF, String senha, String telefone , String cargo) {
-        super(nome, CPF, senha, telefone, cargo);
-        this.cargo = cargo;
-        
+      private String cargo;
+      
+      public Gerente(String nome, String CPF, String senha, String telefone) {
+       
+        super(nome, CPF, senha, telefone, "Gerente");
     }
     
 }

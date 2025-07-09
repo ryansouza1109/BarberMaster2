@@ -7,6 +7,7 @@ package GUI;
 import Classes.Barbeiro;
 import Classes.Funcionario;
 import Classes.Gerente;
+import DAO.FuncionarioDAO;
 import javax.swing.JOptionPane;
 
 /**
@@ -194,7 +195,7 @@ public class TelaLoginProfissional extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
       
-        
+       try { 
         
       String nome = txtNome.getText();
       String CPF = txtCPF.getText();
@@ -221,19 +222,37 @@ public class TelaLoginProfissional extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "As senhas não coincidem!");
         return;
     }
+    
+       Funcionario funcionario;
       
       if (cargo.equals("Gerente")) {
-        Gerente gerente = new Gerente(nome, CPF, senha, telefone, cargo);
-        TelaEscolhaGerente t = new TelaEscolhaGerente();
-        t.setVisible(true);
+        funcionario = new Gerente(nome, CPF, senha, telefone, "Gerente");
+      
     } else if (cargo.equals("Barbeiro")) {
         String especialidade = JOptionPane.showInputDialog(null, "Digite a sua especialidade:");
-        Barbeiro barbeiro = new Barbeiro(nome, CPF, senha, especialidade, telefone, cargo);
-    }
+        funcionario = new Barbeiro(nome, CPF, senha, especialidade, telefone, cargo);
+    } else {
+            JOptionPane.showMessageDialog(null, "Cargo inválido!");
+            return;
+        }
       
       
-      
-      
+         FuncionarioDAO dao = new FuncionarioDAO();
+        boolean sucesso = dao.cadastrar(funcionario); 
+
+            if (sucesso) {
+            JOptionPane.showMessageDialog(null, "Funcionário cadastrado com sucesso!");
+
+            if (cargo.equals("Gerente")) {
+                TelaEscolhaGerente t = new TelaEscolhaGerente();
+                t.setVisible(true);
+                 }
+              } else {
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar o funcionário.");
+                  }
+              } catch (Exception e) {
+              JOptionPane.showMessageDialog(null, "Erro ao cadastrar: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                  }
       
     }//GEN-LAST:event_btnSalvarActionPerformed
 

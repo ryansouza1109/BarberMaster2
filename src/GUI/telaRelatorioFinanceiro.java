@@ -4,8 +4,14 @@
  */
 package GUI;
 
-import Classes.BMempresa;
-import Classes.RelatorioFinanceiro;
+
+import DAO.FinanceiroDAO;
+import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 
 /**
  *
@@ -13,14 +19,16 @@ import Classes.RelatorioFinanceiro;
  */
 public class telaRelatorioFinanceiro extends javax.swing.JFrame {
 
-    /**
-     * Creates new form telaRelatorioFinanceiro
-     */
+     private FinanceiroDAO financeiroDAO;
+    
     public telaRelatorioFinanceiro() {
         initComponents();
+        financeiroDAO = new FinanceiroDAO(); 
+       
+        
     }
     
-     private RelatorioFinanceiro BM = new RelatorioFinanceiro();
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,32 +40,19 @@ public class telaRelatorioFinanceiro extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        btnFecharDia = new javax.swing.JButton();
-        btnLucroMensal = new javax.swing.JButton();
         BTNFecharRelatorio = new javax.swing.JButton();
         btnGastos = new javax.swing.JButton();
         btnRelatorio = new javax.swing.JButton();
         btnADDLucro = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        lblLucroMes = new javax.swing.JLabel();
+        lblGastos = new javax.swing.JLabel();
+        lblSaldoFinal = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel1.setText("Relatorio Financeiro");
-
-        btnFecharDia.setText("Fechar dia");
-        btnFecharDia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFecharDiaActionPerformed(evt);
-            }
-        });
-
-        btnLucroMensal.setText("Lucro mensal");
-        btnLucroMensal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLucroMensalActionPerformed(evt);
-            }
-        });
 
         BTNFecharRelatorio.setText("Fechar relatorio mensal");
         BTNFecharRelatorio.addActionListener(new java.awt.event.ActionListener() {
@@ -94,11 +89,17 @@ public class telaRelatorioFinanceiro extends javax.swing.JFrame {
             }
         });
 
+        lblLucroMes.setText("Lucro do mês: ");
+
+        lblGastos.setText("Gastos do mês: ");
+
+        lblSaldoFinal.setText("Saldo final: ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(284, 284, 284)
@@ -109,63 +110,62 @@ public class telaRelatorioFinanceiro extends javax.swing.JFrame {
                             .addComponent(btnRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnGastos, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(BTNFecharRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnLucroMensal, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnFecharDia, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnADDLucro, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(327, 327, 327)
                         .addComponent(jButton1)))
-                .addContainerGap(225, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblSaldoFinal)
+                    .addComponent(lblGastos)
+                    .addComponent(lblLucroMes))
+                .addGap(109, 109, 109))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(46, 46, 46)
-                .addComponent(jLabel1)
-                .addGap(37, 37, 37)
-                .addComponent(btnFecharDia)
-                .addGap(28, 28, 28)
-                .addComponent(btnLucroMensal)
-                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(lblLucroMes))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblGastos)
+                .addGap(15, 15, 15)
+                .addComponent(lblSaldoFinal)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BTNFecharRelatorio)
-                .addGap(27, 27, 27)
+                .addGap(44, 44, 44)
                 .addComponent(btnGastos)
-                .addGap(31, 31, 31)
+                .addGap(38, 38, 38)
                 .addComponent(btnRelatorio)
-                .addGap(35, 35, 35)
+                .addGap(40, 40, 40)
                 .addComponent(btnADDLucro)
-                .addGap(18, 18, 18)
+                .addGap(81, 81, 81)
                 .addComponent(jButton1)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnFecharDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharDiaActionPerformed
-        BM.fecharDia();
-    }//GEN-LAST:event_btnFecharDiaActionPerformed
-
     private void btnADDLucroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnADDLucroActionPerformed
-       TelaAdicionarLucro t = new TelaAdicionarLucro((RelatorioFinanceiro) BM);
+       TelaAdicionarLucro t = new TelaAdicionarLucro(financeiroDAO); 
        t.setVisible(true);
     }//GEN-LAST:event_btnADDLucroActionPerformed
 
-    private void btnLucroMensalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLucroMensalActionPerformed
-        BM.verLucroMes();
-    }//GEN-LAST:event_btnLucroMensalActionPerformed
-
     private void BTNFecharRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNFecharRelatorioActionPerformed
-        BM.virarMes();
+        financeiroDAO.virarMes(); 
+        atualizarDados();
     }//GEN-LAST:event_BTNFecharRelatorioActionPerformed
 
     private void btnGastosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGastosActionPerformed
-        TelaAdicionarGasto t = new  TelaAdicionarGasto((RelatorioFinanceiro) BM);
-        t.setVisible(true);     
+         TelaAdicionarGasto t = new TelaAdicionarGasto(financeiroDAO);  
+         t.setVisible(true);     
     }//GEN-LAST:event_btnGastosActionPerformed
 
     private void btnRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatorioActionPerformed
-        BM.mostrarMes();
+        financeiroDAO.mostrarMes();
+        atualizarDados();
     }//GEN-LAST:event_btnRelatorioActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -210,11 +210,55 @@ public class telaRelatorioFinanceiro extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BTNFecharRelatorio;
     private javax.swing.JButton btnADDLucro;
-    private javax.swing.JButton btnFecharDia;
     private javax.swing.JButton btnGastos;
-    private javax.swing.JButton btnLucroMensal;
     private javax.swing.JButton btnRelatorio;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lblGastos;
+    private javax.swing.JLabel lblLucroMes;
+    private javax.swing.JLabel lblSaldoFinal;
     // End of variables declaration//GEN-END:variables
+
+ private void atualizarDados() {
+ try {
+        
+        Connection conn = financeiroDAO.getConnection();  
+        if (conn == null) {
+            JOptionPane.showMessageDialog(this, "Erro: Não foi possível conectar ao banco de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;  
+        }
+
+       
+        String sql = "SELECT lucro_mes, gastos FROM RelatorioFinanceiro WHERE id = 1";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        
+      
+        ResultSet rs = stmt.executeQuery();
+        
+       
+        if (rs.next()) {
+            double lucroMes = rs.getDouble("lucro_mes");
+            double gastos = rs.getDouble("gastos");
+            double saldoFinal = lucroMes - gastos;
+            
+            lblLucroMes.setText("Lucro do mês: R$ " + lucroMes);
+            lblGastos.setText("Gastos do mês: R$ " + gastos);
+            lblSaldoFinal.setText("Saldo final: R$ " + saldoFinal);
+        }
+
+       
+        rs.close();
+        stmt.close();
+    } catch (SQLException e) {
+        
+        JOptionPane.showMessageDialog(this, "Erro ao atualizar dados do banco de dados: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+    } catch (Exception e) {
+       
+        JOptionPane.showMessageDialog(this, "Erro desconhecido: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+    }
+    
+
+
+
+ }
 }

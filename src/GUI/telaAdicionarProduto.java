@@ -5,7 +5,16 @@
 package GUI;
 
 import Classes.Produtos;
-import Classes.VendasProdutos;
+
+import DAO.ProdutosDAO;
+import javax.swing.JOptionPane;
+import java.beans.Statement;
+import java.sql.Connection; 
+import java.sql.DriverManager; 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet; 
+import java.sql.SQLException; 
+
 
 /**
  *
@@ -20,7 +29,7 @@ public class telaAdicionarProduto extends javax.swing.JFrame {
         initComponents();
     }
     
-    VendasProdutos vendasProduto = new VendasProdutos();
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -114,11 +123,48 @@ public class telaAdicionarProduto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        String nomeProduto = txtNome.getText();
-        String txtPreço = txtPreco.getText();
-        double preco = Double.parseDouble(txtPreço);
+      try {
+       
+        String nomeProduto = txtNome.getText().trim();
         
-        vendasProduto.adicionarProdutos(new Produtos(nomeProduto, preco));
+       
+        Object precoObj = txtPreco.getValue();
+        
+        
+        if (precoObj == null || nomeProduto.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Preencha todos os campos!", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+      
+        double preco = 0;
+        if (precoObj instanceof Number) {
+            preco = ((Number) precoObj).doubleValue();
+        }
+        
+        
+        if (preco <= 0) {
+            JOptionPane.showMessageDialog(this, "Preço inválido! Digite um valor numérico positivo.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        
+        Produtos produto = new Produtos(nomeProduto, preco);
+
+      
+        ProdutosDAO produtoDAO = new ProdutosDAO();
+        int produtoId = produtoDAO.cadastrar(produto);
+
+        if (produtoId > 0) {
+            JOptionPane.showMessageDialog(this, "Produto cadastrado com sucesso! ID do produto: " + produtoId, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Erro ao cadastrar produto.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+
+    } catch (Exception e) {
+        
+        JOptionPane.showMessageDialog(this, "Erro ao salvar produto: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

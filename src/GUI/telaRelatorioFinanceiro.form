@@ -23,7 +23,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="284" max="-2" attributes="0"/>
@@ -35,8 +35,6 @@
                           <Component id="btnRelatorio" min="-2" pref="343" max="-2" attributes="0"/>
                           <Component id="btnGastos" min="-2" pref="343" max="-2" attributes="0"/>
                           <Component id="BTNFecharRelatorio" min="-2" pref="343" max="-2" attributes="0"/>
-                          <Component id="btnLucroMensal" min="-2" pref="343" max="-2" attributes="0"/>
-                          <Component id="btnFecharDia" min="-2" pref="343" max="-2" attributes="0"/>
                           <Component id="btnADDLucro" alignment="1" min="-2" pref="343" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -45,7 +43,13 @@
                       <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="225" max="32767" attributes="0"/>
+              <EmptySpace pref="37" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lblSaldoFinal" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblGastos" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblLucroMes" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="109" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -53,22 +57,25 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-              <Component id="btnFecharDia" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-              <Component id="btnLucroMensal" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblLucroMes" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="lblGastos" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+              <Component id="lblSaldoFinal" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="BTNFecharRelatorio" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
               <Component id="btnGastos" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
               <Component id="btnRelatorio" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
               <Component id="btnADDLucro" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
               <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="14" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -81,22 +88,6 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Relatorio Financeiro"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnFecharDia">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Fechar dia"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFecharDiaActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnLucroMensal">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Lucro mensal"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLucroMensalActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BTNFecharRelatorio">
       <Properties>
@@ -137,6 +128,21 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblLucroMes">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Lucro do m&#xea;s: "/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblGastos">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Gastos do m&#xea;s: "/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblSaldoFinal">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Saldo final: "/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

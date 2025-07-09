@@ -5,7 +5,9 @@
 package GUI;
 
 import Classes.Produtos;
-import Classes.VendasProdutos;
+
+import DAO.ProdutosDAO;
+import DAO.VendasProdutosDAO;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -19,12 +21,19 @@ public class TelaComprarProduto extends javax.swing.JFrame {
     /**
      * Creates new form TelaComprarProduto
      */
+    
+     private List<Produtos> listaProdutos;
+     
     public TelaComprarProduto() {
         initComponents();
-        VendasProdutos vendasProdutos = new VendasProdutos();
-        List<Produtos> listaProdutos = vendasProdutos.listarProdutos();
-        preencheTabela(listaProdutos);
+       
+        ProdutosDAO produtosDAO = new ProdutosDAO();
+        listaProdutos = produtosDAO.listarProdutos();  
+        System.out.println("Produtos encontrados: " + listaProdutos.size()); 
+        preencheTabela(listaProdutos);           
     }
+    
+   
     
 
 
@@ -124,18 +133,43 @@ public class TelaComprarProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
+      
+        
         int linhaSelecionada = tblProdutos.getSelectedRow();
+        if (linhaSelecionada == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione um produto para comprar!");
+            return;
+        }
 
-    if (linhaSelecionada == -1) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Selecione um produto para comprar!");
-        return;
-    }
+        if (listaProdutos == null || listaProdutos.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "A lista de produtos está vazia!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-    String nomeProduto = (String) tblProdutos.getValueAt(linhaSelecionada, 0);
-    String precoProduto = (String) tblProdutos.getValueAt(linhaSelecionada, 1);
+        if (linhaSelecionada >= 0 && linhaSelecionada < listaProdutos.size()) {
+            Produtos produtoSelecionado = listaProdutos.get(linhaSelecionada);
+            if (produtoSelecionado != null) {
+                int produtoId = produtoSelecionado.getId();
+                String nomeProduto = produtoSelecionado.getNome();
+                String precoProduto = String.valueOf(produtoSelecionado.getPreco());
 
-   
-       javax.swing.JOptionPane.showMessageDialog(this, "Produto comprado:\n" + nomeProduto + "\nPreço: R$ " + precoProduto, "Compra realizada", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                String quantidadeTexto = JOptionPane.showInputDialog(this, "Informe a quantidade:");
+                if (quantidadeTexto == null || quantidadeTexto.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Quantidade não informada!", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                int quantidade = Integer.parseInt(quantidadeTexto);
+                VendasProdutosDAO vendasDAO = new VendasProdutosDAO();
+                if (!vendasDAO.produtoExiste(produtoId)) {
+                    JOptionPane.showMessageDialog(this, "Produto não encontrado no banco de dados!", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                vendasDAO.cadastrarVenda(produtoId, quantidade);
+                JOptionPane.showMessageDialog(this, "Produto comprado:\n" + nomeProduto + "\nPreço: R$ " + precoProduto, "Compra realizada", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_btnComprarActionPerformed
 
     /**
@@ -182,21 +216,32 @@ public class TelaComprarProduto extends javax.swing.JFrame {
     private javax.swing.JTable tblProdutos;
     // End of variables declaration//GEN-END:variables
  public void preencheTabela(List<Produtos> p) {
-    String colunas[] = {"Nome", "Preço"};
-    String dados[][] = new String[p.size()][colunas.length];
-    
-    int i = 0;
-    for (Produtos produto : p) {
-        dados[i][0] = produto.getNome();
-        dados[i][1] = String.valueOf(produto.getPreco());
-        i++;
+     
+     
+       
+       
+        if (p != null && !p.isEmpty()) {
+            DefaultTableModel modeloTabela = (DefaultTableModel) tblProdutos.getModel();
+            String[] colunas = {"Nome", "Preço"};
+            String[][] dados = new String[p.size()][colunas.length];
+            int i = 0;
+
+            for (Produtos produto : p) {
+                dados[i][0] = produto.getNome();
+                dados[i][1] = String.valueOf(produto.getPreco());
+                i++;
+            }
+
+            DefaultTableModel model = new DefaultTableModel(dados, colunas);
+            tblProdutos.setModel(model);
+        } else {
+            JOptionPane.showMessageDialog(this, "Nenhum produto encontrado para exibição.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
-    DefaultTableModel model = new DefaultTableModel(dados, colunas);
-    tblProdutos.setModel(model);
 }
 
 
 
 
-}
+

@@ -11,25 +11,30 @@ import java.util.List;
  * @author ryanp
  */
 public class Produtos {
-    
-    private String nome;
-    private double preco;
-    List <Produtos> produtos;
+     private int id;
+     private String nome;
+     private double preco;
+     
 
     
     
-    public Produtos(String nome, double preco) {
-        
+     public Produtos( String nome, double preco) {
         
         this.nome = nome;
         this.preco = preco;
         
-        
-        
     }
     
+       public Produtos(int id, String nome, double preco) {
+         this.id = id;
+         this.nome = nome;
+         this.preco = preco;
+      }
     
-
+    
+    public int getId() {
+        return id;  
+    }
     
 
     public String getNome() {

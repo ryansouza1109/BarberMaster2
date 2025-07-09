@@ -5,6 +5,7 @@
 package GUI;
 
 import Classes.Cliente;
+import DAO.ClienteDAO;
 import javax.swing.JOptionPane;
 
 /**
@@ -222,12 +223,23 @@ public class TelaLoginCliente extends javax.swing.JFrame {
      
       
       if (confirmarSenha.equals(senha)) {
-          JOptionPane.showMessageDialog(null ,"Login cadastrado com sucesso");
+         
           
            Cliente c = new Cliente(nome, telefone, email, senha); 
+           ClienteDAO cdao = new ClienteDAO();
+           boolean sucesso = cdao.cadastrar(c);
+           
+           
+           if(sucesso) {
+           JOptionPane.showMessageDialog(null ,"Login cadastrado com sucesso");
+           
            
            telaEscolhaCliente t = new  telaEscolhaCliente(c);
            t.setVisible(true);
+           
+           } else {
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar o cliente.");
+                  }
           
            
            

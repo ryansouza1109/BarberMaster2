@@ -4,7 +4,8 @@
  */
 package GUI;
 
-import Classes.RelatorioFinanceiro;
+
+import DAO.FinanceiroDAO;
 
 /**
  *
@@ -19,12 +20,12 @@ public class TelaAdicionarGasto extends javax.swing.JFrame {
         initComponents();
     }
     
-    public TelaAdicionarGasto(RelatorioFinanceiro R) {
+    public TelaAdicionarGasto(FinanceiroDAO R) {
         initComponents();
         this.R = R;
     }
     
-     RelatorioFinanceiro R;
+      private FinanceiroDAO R;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -139,9 +140,14 @@ public class TelaAdicionarGasto extends javax.swing.JFrame {
     }//GEN-LAST:event_txtGastoActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        Double gasto = Double.parseDouble(txtGasto.getText());
-        String descricao = TxtDescricao.getText();
-        R.addGasto(gasto , descricao);
+           try {
+            Double gasto = Double.parseDouble(txtGasto.getText());
+            String descricao = TxtDescricao.getText();
+            R.addGasto(gasto, descricao);
+            javax.swing.JOptionPane.showMessageDialog(this, "Gasto salvo com sucesso!");
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Valor inválido para gasto.");
+        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

@@ -6,6 +6,7 @@ package GUI;
 
 import Classes.Agendamentos;
 import Classes.Cliente;
+import DAO.AgendamentoDAO;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -146,29 +147,22 @@ public class telaCancelarAgendamento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-   String dataCancelamento = txtDataCancelar.getText().trim();
-        String horaCancelamento = txtHoraCancelar.getText().trim();
+                                                       
+         String dataCancelamento = txtDataCancelar.getText().trim();
+         String horaCancelamento = txtHoraCancelar.getText().trim();
+         
+         AgendamentoDAO a = new AgendamentoDAO();
+    
+          if (dataCancelamento.isEmpty() || horaCancelamento.isEmpty()) {
+              JOptionPane.showMessageDialog(this, "Por favor, preencha a data e a hora do agendamento a ser cancelado.");
+               return;
+              }
+    
+            boolean sucesso = a.cancelarAgendamento(dataCancelamento, horaCancelamento); /// dando erro
+             if (!sucesso) {
+                JOptionPane.showMessageDialog(this, "Erro ao cancelar o agendamento. Verifique as informações e tente novamente.");
+                 }
 
-        boolean agendamentoCancelado = false;
-
-        
-        if (agendamentos != null) {
-            for (Agendamentos agendamento : agendamentos) {
-                if (agendamento.getData().trim().equals(dataCancelamento) && agendamento.getHora().trim().equals(horaCancelamento)) {
-                    
-                    agendamentos.remove(agendamento);
-                    agendamentoCancelado = true;
-                    break;
-                }
-            }
-        }
-
-        
-        if (agendamentoCancelado) {
-            JOptionPane.showMessageDialog(this, "Agendamento cancelado com sucesso!");
-        } else {
-            JOptionPane.showMessageDialog(this, "Agendamento não encontrado.");
-        }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

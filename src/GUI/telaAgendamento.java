@@ -6,6 +6,7 @@ package GUI;
 
 import Classes.Agendamentos;
 import Classes.Cliente;
+import DAO.AgendamentoDAO;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -189,10 +190,11 @@ public class telaAgendamento extends javax.swing.JFrame {
         
         Agendamentos agendamento = new Agendamentos(data, horario, descricao, c, FormaPagamento);
         agendamentos.add(agendamento);
-
+        AgendamentoDAO dao = new AgendamentoDAO();
+        dao.cadastrar(agendamento); 
          
 
-        JOptionPane.showMessageDialog(this, "Agendamento realizado com sucesso!");
+       
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
