@@ -226,7 +226,7 @@ public class TelaLoginProfissional extends javax.swing.JFrame {
        Funcionario funcionario;
       
       if (cargo.equals("Gerente")) {
-        funcionario = new Gerente(nome, CPF, senha, telefone, "Gerente");
+        funcionario = new Gerente(nome, CPF, senha, telefone);
       
     } else if (cargo.equals("Barbeiro")) {
         String especialidade = JOptionPane.showInputDialog(null, "Digite a sua especialidade:");

@@ -41,13 +41,13 @@ public class ProdutosDAO {
 
                 Produtos produto = new Produtos(id, nome, preco);
                 listaProdutos.add(produto);
-                System.out.println("Produto encontrado: " + nome + " - Preço: " + preco); 
+                
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao listar produtos: " + e.getMessage());
         }
 
-        System.out.println("Total de produtos encontrados: " + listaProdutos.size());  
+       
         return listaProdutos;
     }
      
@@ -59,19 +59,19 @@ public class ProdutosDAO {
         stmt.setString(1, p.getNome());
         stmt.setDouble(2, p.getPreco());
 
-        // Executa o INSERT
+        
         stmt.executeUpdate();
 
-        // Recupera o ID gerado
+      
         ResultSet rs = stmt.getGeneratedKeys();
         if (rs.next()) {
-            idGerado = rs.getInt(1); // Obtém o ID do produto
+            idGerado = rs.getInt(1);
         }
     } catch (SQLException e) {
         JOptionPane.showMessageDialog(null, "Erro ao inserir produto: " + e.getMessage());
     }
 
-    return idGerado; // Retorna o ID gerado
+    return idGerado; 
 }
 
 

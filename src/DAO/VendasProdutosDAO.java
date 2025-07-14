@@ -35,6 +35,7 @@ public class VendasProdutosDAO {
             JOptionPane.showMessageDialog(null, "Venda cadastrada com sucesso!");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao inserir venda: " + e.getMessage());
+              e.printStackTrace();
         }
     
      
@@ -45,14 +46,13 @@ public class VendasProdutosDAO {
         String sql = "SELECT COUNT(*) FROM produtos WHERE id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, produtoId);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next() && rs.getInt(1) > 0) {
-                return true;  
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next() && rs.getInt(1) > 0;
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;  
-}
+    }
      
 }

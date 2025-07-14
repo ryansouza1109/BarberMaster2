@@ -5,6 +5,7 @@
 package GUI;
 
 import Classes.Cliente;
+import Classes.ServicoCliente;
 
 /**
  *
@@ -12,7 +13,7 @@ import Classes.Cliente;
  */
 public class TelaMudarSenha extends javax.swing.JFrame {
 
-    Cliente c;
+    ServicoCliente c;
     
     
     public TelaMudarSenha() {
@@ -20,7 +21,7 @@ public class TelaMudarSenha extends javax.swing.JFrame {
         
     }
     
-    public TelaMudarSenha(Cliente cliente) {
+    public TelaMudarSenha(ServicoCliente cliente) {
     initComponents();
     this.c = cliente; 
 }
@@ -138,7 +139,7 @@ public class TelaMudarSenha extends javax.swing.JFrame {
         senhaNova = senhaNova.trim();
         String email = txtEmail.getText();
         
-        c.RedefinirSenha(senhaAntiga, senhaNova);
+        c.redefinirSenha(c, senhaAntiga, senhaNova);
         
         
         
